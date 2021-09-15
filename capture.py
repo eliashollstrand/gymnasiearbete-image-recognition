@@ -20,7 +20,7 @@ def captureImage():
   image = cam.get_image()
   cam.stop()
   timestr = time.strftime("%Y%m%d-%H:%M:%S")
-  pygame.image.save(image, timestr)
+  pygame.image.save(image, "/home/pi/Documents/GA/captured_img/" + timestr)
   print("Image taken")
  
 while True:
