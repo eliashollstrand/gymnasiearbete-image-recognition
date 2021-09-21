@@ -1,4 +1,4 @@
-# Gymnasiearbete2021-image-recognition
+# Gymnasiearbete 2021 - Surveillance camera with image classification
 Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a. Raspberry Pi samt komponenter. 
 
 ## Filer
