@@ -1,7 +1,7 @@
 # Gymnasiearbete 2021 - Övervakningskamera med image recognition
 Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a. Raspberry Pi samt komponenter. 
 
-Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D
+*Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D*
 
 ## Filer
 **capture.py** - Kod som körs på Raspberry Pi som lyssnar på förhöjd spänning från PIR sensorn och signalerar till webcam att spara en snapshot. Bilden skickas sedan till en mapp på en FTP-server där bilden analyseras av ett Python script.
