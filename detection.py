@@ -5,8 +5,6 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 img = "images/test/Elias.b195b325-211b-11ec-81af-84fdd18c7552.jpg"
-# plt.imshow(img)
-# plt.show()
 
 img = image.load_img(img, target_size=(224, 224))
 
