@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow.keras.layers import Dense
 
 import os
 import numpy as np
@@ -61,6 +62,8 @@ model.summary()
 print('Number of trainable variables = {}'.format(len(model.trainable_variables)))
 
 epochs = 10
+
+model.add(Dense(2, activation = "softmax"))
 
 history = model.fit(train_generator,
                     epochs=epochs,
