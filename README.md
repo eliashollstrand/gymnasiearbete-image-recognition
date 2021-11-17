@@ -4,10 +4,10 @@ Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a
 *Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D*
 
 ## Filer
-**capture.py** (*Saknar kommentarer*) - Kod som körs på Raspberry Pi som lyssnar på förhöjd spänning från PIR sensorn och signalerar till webcam att spara en snapshot. Bilden skickas sedan till en mapp på en FTP-server där bilden analyseras av ett Python script. 
+**capture.py** - Kod som körs på Raspberry Pi som lyssnar på förhöjd spänning från PIR sensorn och signalerar till webcam att spara en snapshot. Bilden skickas sedan till en mapp på en FTP-server där bilden analyseras av ett Python script. 
 
-**modeltraining.py** (*Saknar kommentarer*) - Hämtar en förtränad model och tränar om den på nya klasser som vi vill att kameran ska kunna identifiera. 
+**face_classifier.py** - Hämtar en förtränad model och tränar om den på nya klasser som vi vill att kameran ska kunna identifiera (Ansikten). 
 
-**detection.py** (*Saknar kommentarer*) - Tillämpar den tränade modellen på en angiven bild och återger namn på den klass som identifierats i bilden, om någon funnits dvs. 
+**detection.py** - Tillämpar den tränade modellen på en angiven bild och återger namn på den klass som identifierats i bilden, om någon funnits dvs. 
 
-**labels.txt** - Lista med alla de klasser som modellen är tränad på.
+**test_all_images_per_class.py** - Testar den tränade modellen på alla bilder i test-dataseten.
