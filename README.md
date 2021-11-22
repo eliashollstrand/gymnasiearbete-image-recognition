@@ -4,7 +4,7 @@ Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a
 *Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D*
 
 ## Filer
-**capture.py** - Kod som körs på Raspberry Pi som lyssnar på förhöjd spänning från PIR sensorn och signalerar till webcam att spara en snapshot. Bilden skickas sedan till en mapp på en FTP-server där bilden analyseras av ett Python script. 
+**capture.py** - Kod som körs på Raspberry Pi som lyssnar på förhöjd spänning från PIR sensorn och signalerar till webcam att spara en snapshot. Bilden skickas sedan till en Google Drive folder där bilden analyseras av ett Python script. 
 
 **face_classifier.py** - Hämtar en förtränad model och tränar om den på nya klasser som vi vill att kameran ska kunna identifiera (Ansikten). 
 
