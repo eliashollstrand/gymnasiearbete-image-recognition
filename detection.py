@@ -13,10 +13,10 @@ class_names = ['Elias', 'Vincent']
 num_classes = len(class_names)
 
 #Elias
-test_path = 'datasets/face_dataset_test_images/Elias/elias8.jpg'
+test_path = 'datasets/face_dataset_test_images/Elias/elias9.jpg'
 
 #Vincent
-# test_path = 'datasets/face_dataset_test_images/Vincent/vincent.jpg'
+# test_path = 'datasets/face_dataset_test_images/Vincent/vincent2.jpg'
 
 test_image = image.load_img(test_path, target_size=(img_height, img_width, 3))
 test_image = image.img_to_array(test_image)  # from image to array
@@ -29,7 +29,7 @@ model = keras.models.load_model(f'models/{model_name}')
 result = model.predict(test_image)
 
 classes = np.argmax(result, axis = 1)
-detected_class_index = classes[0]
+# detected_class_index = classes[0]
 confidence_percent = str(round(max(result[0])*100, 2))
 
 detected_class = ""
