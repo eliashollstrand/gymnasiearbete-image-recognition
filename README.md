@@ -11,3 +11,5 @@ Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a
 **detection.py** - Tillämpar den tränade modellen på en angiven bild och återger namn på den klass som identifierats i bilden, om någon funnits dvs. 
 
 **test_all_images_per_class.py** - Samma funktion som detection.py men testar istället den tränade modellen på *alla* bilder i test-dataseten.
+
+**check_for_new_files.py** - Kontrollerar om det läggs till några nya filer i Google Drive foldern.
