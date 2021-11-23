@@ -4,6 +4,7 @@ import pygame
 import pygame.camera
 from Google import Create_Service #Google.py source code: https://learndataanalysis.org/google-drive-api-in-python-getting-started-lesson-1/
 from googleapiclient.http import MediaFileUpload
+from datetime import datetime
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -19,20 +20,26 @@ CLIENT_SECRET_FILE = 'client_secrets.json'
 API_NAME = 'drive'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/drive']
-folder_id = '1-E0rlOk1gInyRbfWzJakXtVKndYcaGkt'
+all_folder_id = "13wCwokR7xvUYpRPVtb2Gvs58uvJdnZj3"
+today_folder_id = "1Iz-7bHUY_n07vpF2HDmw3ZpRQDaVb3yh"
+folders = [all_folder_id, today_folder_id]
 
 def uploadToServer(image_file): #Uploads image to google drive folder specified above
 
   service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES) 
 
-  file_names = [image_file]
-  file_types = ['image/jpeg']
+  file_name = image_file
+  file_type = 'image/jpeg'
 
-  for file_name, file_type in zip(file_names, file_types):
+  items = []
+  for folder in folders:
     file_metadata = {
       'name': file_name.replace("/home/pi/Documents/GA/captured_img/", ""),
-      'parents': [folder_id]
+      'parents': [folder]
     }
+
+    results = service.files().list(fields="nextPageToken, files(id, name, mimeType, size, parents)").execute()
+    items = results.get('files', [])
 
     media = MediaFileUpload(image_file, mimetype=file_type)
 
@@ -41,6 +48,15 @@ def uploadToServer(image_file): #Uploads image to google drive folder specified 
       media_body = media,
       fields = 'id'
     ).execute()
+  
+  for item in items:
+    date_taken = item["name"][:10] # checks first part of string (YYYY-MM-DD)
+    now = datetime.now()
+    today = now.strftime("%Y-%m-%d")
+    if(item["mimeType"] == "image/jpeg"):
+      if(item["parents"][0] == today_folder_id and date_taken != today): # delete files from "Today's images" if they aren't from today
+        service.files().delete(fileId=item["id"]).execute()
+        print("Deleted " + item["name"] + " from Today's images")
 
 def captureImage():
   cam.start()
