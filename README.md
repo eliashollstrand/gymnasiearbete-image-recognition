@@ -12,4 +12,4 @@ Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a
 
 **test_all_images_per_class.py** - Samma funktion som detection.py men testar istället den tränade modellen på *alla* bilder i test-dataseten.
 
-**check_for_new_files.py** - Kontrollerar om det läggs till några nya filer i Google Drive foldern.
+**check_for_new_files.py** - Kontrollerar om det läggs till några nya filer i Google Drive foldern och anropar isåfall funktionen "detect" i detection.py med den aktuella bilden som parameter.
