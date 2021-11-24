@@ -10,7 +10,7 @@ Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a
 ## Filer
 **capture.py** - Kod som körs på Raspberry Pi som lyssnar på förhöjd spänning från PIR sensorn och signalerar till webcam att spara en snapshot. Bilden skickas sedan till en Google Drive folder där bilden analyseras av ett Python script. 
 
-**face_classifier.py** - Hämtar en förtränad model (ResNet50) och tränar om den på nya klasser som vi vill att kameran ska kunna identifiera (Ansikten). 
+**face_classifier.py** - Hämtar en förtränad model (ResNet50) och tränar om den på nya klasser som vi vill att kameran ska kunna identifiera (ansikten). 
 
 **detection.py** - Tillämpar den tränade modellen på en angiven bild och återger namn på den klass som identifierats i bilden, om någon funnits dvs. 
 
