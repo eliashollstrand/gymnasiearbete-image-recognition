@@ -3,6 +3,9 @@ Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a
 
 *Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D*
 
+**Progress:** Kameran kan nu ta bild vid rörelse och skicka denna till en Google drive folder. Kod för att känna av när ny bild kommer in i foldern är färdigställd och sammanlänkad med kod för att genomföra detection på denna utifrån modellen "face_classifier" som är tränad på våra (Elias och Vincent) ansikten. 
+**Fokus framåt:** Jobba vidare med modeller och försöka träna dessa på flera klasser. 
+
 ## Filer
 **capture.py** - Kod som körs på Raspberry Pi som lyssnar på förhöjd spänning från PIR sensorn och signalerar till webcam att spara en snapshot. Bilden skickas sedan till en Google Drive folder där bilden analyseras av ett Python script. 
 
