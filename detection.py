@@ -6,7 +6,7 @@ from tensorflow.keras.preprocessing import image
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from datetime import datetime
 from googleapiclient.http import MediaIoBaseDownload
-from Google import Create_Service #Google.py source code: https://learndataanalysis.org/google-drive-api-in-python-getting-started-lesson-1/
+from Google import Create_Service
  
 now = datetime.now()
 time = now.strftime("%Y-%m-%d %H.%M.%S")
@@ -15,6 +15,7 @@ print("Recieved at " + time)
 img_height, img_width = 250, 250
 class_names = ['Elias', 'Vincent']
 num_classes = len(class_names)
+model_name = 'face_classifier.h5' # The model to be used
 
 CLIENT_SECRET_FILE = 'client_secrets.json'
 API_NAME = 'drive'
@@ -41,10 +42,10 @@ def detect(obj):
 
             fh.seek(0)
 
-            with open(os.path.join("undetected_images/", item["name"]), "wb") as file:
+            with open(os.path.join("webcam_images/", item["name"]), "wb") as file:
                 file.write(fh.read())
                 file.close
-                test_path = "undetected_images/" + item["name"]
+                test_path = "webcam_images/" + item["name"]
 
     # #Elias
     # # test_path = 'datasets/face_dataset_test_images/Elias/elias10.jpg'
@@ -57,14 +58,15 @@ def detect(obj):
     # shape from (250, 250, 3) to (1, 250, 250, 3)
     test_image = np.expand_dims(test_image, axis=0)
 
-    model_name = 'face_classifier.h5'
     model = keras.models.load_model(f'models/{model_name}')
 
     result = model.predict(test_image)
 
     classes = np.argmax(result, axis = 1)
-    # detected_class_index = classes[0]
     confidence_percent = str(round(max(result[0])*100, 2))
+    confident = False
+    if(float(confidence_percent) >= 70):
+        confident = True
 
     detected_class = ""
     predictions = []
@@ -72,29 +74,34 @@ def detect(obj):
         print("{:6} with probabily of {:.2f}%".format(class_names[index], result[0][index] * 100))
         predictions.append(result[0][index] * 100)
 
-    for i in range(len(predictions)):
-        if(predictions[i] == max(predictions)):
-            detected_class = class_names[i]
-
-    print("=> Detected: " + detected_class)
+    if(confident):
+        for i in range(len(predictions)):
+            if(predictions[i] == max(predictions)):
+                detected_class = class_names[i]
+        
+        print("=> Detected: " + detected_class)
+    else:
+        print("=> Detected: Unknown")
             
     # Save image with detected class label text
     result_image = Image.open(test_path)
     result_image = ImageOps.exif_transpose(result_image) # Prevents image from rotating if it has an EXIF orientation tag
     image_editable = ImageDraw.Draw(result_image)
-    class_text = str(detected_class + ": " + confidence_percent + "%")
     W, H = result_image.size
     text_font = ImageFont.truetype('C:\\Users\\Elev\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Rubik-Regular.ttf', round(W*0.05))
-    w, h = image_editable.textsize(class_text, font=text_font)
 
-    # Text color is set to red if the prediction confidence is lower than or equal to 50%
+    # Text color is set to red and detected class is set to Unknown
+    # if the prediction confidence is lower than or equal to 70%
     # Otherwise green
     text_color = ""
-    if(float(confidence_percent) >= 50):
+    if(confident):
+        class_text = str(detected_class + ": " + confidence_percent + "%")
         text_color = (19, 252, 3)
     else:
-        text_color = fill='red'
+        class_text = "Unknown"
+        text_color = 'red'
 
+    w, h = image_editable.textsize(class_text, font=text_font)
     image_editable.text(((W-w)/2, 20), class_text, text_color, font=text_font)
 
-    result_image.save("detected_images/" + time + ".jpg")
+    result_image.save("detected_images/" + time + ".png")
