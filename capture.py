@@ -24,9 +24,9 @@ all_folder_id = "13wCwokR7xvUYpRPVtb2Gvs58uvJdnZj3"
 today_folder_id = "1Iz-7bHUY_n07vpF2HDmw3ZpRQDaVb3yh"
 folders = [all_folder_id, today_folder_id]
 
-def uploadToServer(image_file): #Uploads image to google drive folder specified above
+service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES) 
 
-  service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES) 
+def uploadToServer(image_file): #Uploads image to google drive folder specified above
 
   file_name = image_file
   file_type = 'image/jpeg'
@@ -48,6 +48,7 @@ def uploadToServer(image_file): #Uploads image to google drive folder specified 
       media_body = media,
       fields = 'id'
     ).execute()
+  print("Image uploaded to server")
   
   for item in items:
     date_taken = item["name"][:10] # checks first part of string (YYYY-MM-DD)
