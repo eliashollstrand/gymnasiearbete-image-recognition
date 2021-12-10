@@ -3,7 +3,7 @@ Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a
 
 *Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D*
 
-**Progress:** Kameran kan nu ta bild vid rörelse och skicka denna till en Google drive folder. Kod för att känna av när ny bild kommer in i foldern är färdigställd och sammanlänkad med kod för att genomföra detection på denna utifrån modellen "face_classifier" som är tränad på våra (Elias och Vincent) ansikten. 
+**Progress:** Kameran kan nu ta bild vid rörelse och skicka denna till en Google drive folder. Kod för att känna av när ny bild kommer in i foldern är färdigställd och sammanlänkad med kod för att genomföra detection på denna utifrån en modell som är tränad på våra (Elias och Vincent) ansikten. 
 
 **Fokus framåt:** Jobba vidare med modeller och försöka träna dessa på flera klasser. Skapa mobilapplikation.
 
