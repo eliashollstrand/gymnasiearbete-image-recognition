@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript">
+       (function worker() {
+          $.get('/data', function(data) {
+            $('#first').html("<strong>Detected:</strong> " + data[4].split(' - ')[1].replace(".jpg", ""));    
+            $('#first_date').html("<strong>Date:</strong> " + data[4].split(' - ')[0].replace(".", ":"));    
+            $('#second').html("<strong>Detected:</strong> " + data[3].split(' - ')[1].replace(".jpg", "")); 
+            $('#second_date').html("<strong>Date:</strong> " + data[3].split(' - ')[0].replace(".", ":"));    
+            $('#third').html("<strong>Detected:</strong> " + data[2].split(' - ')[1].replace(".jpg", "")); 
+            $('#third_date').html("<strong>Date:</strong> " + data[2].split(' - ')[0].replace(".", ":"));   
+            $('#fourth').html("<strong>Detected:</strong> " + data[1].split(' - ')[1].replace(".jpg", "")); 
+            $('#fourth_date').html("<strong>Date:</strong> " + data[1].split(' - ')[0].replace(".", ":")); 
+          });
+
+          $.get('/get_images', function(data) {
+            $("#first_image").attr("src","static/" + data[0]);
+            $("#second_image").attr("src","static/" + data[1]);
+            $("#third_image").attr("src","static/" + data[2]);
+            $("#fourth_image").attr("src","static/" + data[3]);
+
+            setTimeout(worker, 1000);
+          });
+
+        })();
+    </script>
+    <style>
+        #first_image, #second_image, #third_image, #fourth_image, #fifth_image {
+            width: calc(147.5555555555556);
+            /* height: 83px; */
+            margin-left: calc(37% - 100px);
+            margin-top: -112px;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: 0.25rem 0 0 0.25rem;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        .card {
+            margin-left: calc(37% - 50px);
+            width: 40%;
+            border-radius: 0 0.25rem 0.25rem 0;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        .activity {
+            margin-left: calc(37% - 100px);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-top: 20px">Surveillance camera</h1>
+    
+    <p class="activity">Latest activity</p>
+    <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="first"></li>
+          <li class="list-group-item" id="first_date"></li>
+        </ul>
+    </div>
+    <img id="first_image" src="" alt="">
+
+    <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="second"></li>
+          <li class="list-group-item" id="second_date"></li>
+        </ul>
+    </div>
+    <img id="second_image" src="" alt="">
+
+    <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="third"></li>
+          <li class="list-group-item" id="third_date"></li>
+        </ul>
+    </div>
+    <img id="third_image" src="" alt="">
+
+    <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="fourth"></li>
+          <li class="list-group-item" id="fourth_date"></li>
+        </ul>
+    </div>
+    <img id="fourth_image" src="" alt="">
+</body>
+</html>
