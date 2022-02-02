@@ -6,16 +6,16 @@ from tensorflow.keras.preprocessing import image
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from datetime import datetime
 from googleapiclient.http import MediaIoBaseDownload
-from Google import Create_Service
+from Google import Create_Service #Google.py source code: https://learndataanalysis.org/google-drive-api-in-python-getting-started-lesson-1/
  
 now = datetime.now()
 time = now.strftime("%Y-%m-%d %H.%M.%S")
 print("Recieved at " + time)
 
 img_height, img_width = 250, 250
-class_names = ['Elias', 'Vincent']
+class_names = os.listdir("datasets/dataset_train_images")
 num_classes = len(class_names)
-model_name = 'face_classifier.h5' # The model to be used
+model_name = 'face_classifier_v4.h5' # The model to be used
 
 CLIENT_SECRET_FILE = 'client_secrets.json'
 API_NAME = 'drive'
@@ -47,12 +47,6 @@ def detect(obj):
                 file.close
                 test_path = "webcam_images/" + item["name"]
 
-    # #Elias
-    # # test_path = 'datasets/face_dataset_test_images/Elias/elias10.jpg'
-
-    # #Vincent
-    # # test_path = 'datasets/face_dataset_test_images/Vincent/vincent2.jpg'
-
     test_image = image.load_img(test_path, target_size=(img_height, img_width, 3))
     test_image = image.img_to_array(test_image)  # from image to array
     # shape from (250, 250, 3) to (1, 250, 250, 3)
@@ -65,7 +59,7 @@ def detect(obj):
     classes = np.argmax(result, axis = 1)
     confidence_percent = str(round(max(result[0])*100, 2))
     confident = False
-    if(float(confidence_percent) >= 70):
+    if(float(confidence_percent) >= 85):
         confident = True
 
     detected_class = ""
@@ -79,9 +73,10 @@ def detect(obj):
             if(predictions[i] == max(predictions)):
                 detected_class = class_names[i]
         
-        print("=> Detected: " + detected_class)
     else:
-        print("=> Detected: Unknown")
+        detected_class = "Unknown"
+    
+    print("=> Detected: " + detected_class)
             
     # Save image with detected class label text
     result_image = Image.open(test_path)
@@ -104,4 +99,4 @@ def detect(obj):
     w, h = image_editable.textsize(class_text, font=text_font)
     image_editable.text(((W-w)/2, 20), class_text, text_color, font=text_font)
 
-    result_image.save("detected_images/" + time + ".png")
+    result_image.save("detected_images/" + time + " - " + detected_class + ".png")

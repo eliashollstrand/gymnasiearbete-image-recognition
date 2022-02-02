@@ -7,55 +7,158 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
     <script type="text/javascript">
-       (function worker() {
-          $.get('/data', function(data) {
-            $('#first').html("<strong>Detected:</strong> " + data[4].split(' - ')[1].replace(".jpg", ""));    
-            $('#first_date').html("<strong>Date:</strong> " + data[4].split(' - ')[0].replace(".", ":"));    
-            $('#second').html("<strong>Detected:</strong> " + data[3].split(' - ')[1].replace(".jpg", "")); 
-            $('#second_date').html("<strong>Date:</strong> " + data[3].split(' - ')[0].replace(".", ":"));    
-            $('#third').html("<strong>Detected:</strong> " + data[2].split(' - ')[1].replace(".jpg", "")); 
-            $('#third_date').html("<strong>Date:</strong> " + data[2].split(' - ')[0].replace(".", ":"));   
-            $('#fourth').html("<strong>Detected:</strong> " + data[1].split(' - ')[1].replace(".jpg", "")); 
-            $('#fourth_date').html("<strong>Date:</strong> " + data[1].split(' - ')[0].replace(".", ":")); 
-          });
+       (function update() {
+          
+            names = ["#first", "#second", "#third", "#fourth"]
+            dates = ["#first_date", "#second_date", "#third_date", "#fourth_date"]
+            images = ["#first_image", "#second_image", "#third_image", "#fourth_image"]
 
-          $.get('/get_images', function(data) {
-            $("#first_image").attr("src","static/" + data[0]);
-            $("#second_image").attr("src","static/" + data[1]);
-            $("#third_image").attr("src","static/" + data[2]);
-            $("#fourth_image").attr("src","static/" + data[3]);
+            $.get('/data', function(data) {
+                for(let i = 0; i < data.length; i++) {
+                    $(names[i]).html("<strong>Detected:</strong> " + data[i].split(' - ')[1].replace(".png", ""))
+                    $(dates[i]).html("<strong>Date:</strong> " + data[i].split(' - ')[0].replace(".", ":"))
+                }    
 
-            setTimeout(worker, 1000);
-          });
+                if(data.length < 4) {
+                    for(let i = 0; i <= (4 - data.length); i++) {
+                        $(names[4-i]).html("")
+                        $(dates[4-i]).html("")
+                    }
+                }
+            });
+
+            $.get('/get_images', function(data) {
+
+                for(let i = 0; i < data.length; i++) {
+                    $(images[i]).attr("src","static/" + data[i]);
+                }    
+
+                if(data.length < 4) {
+                    for(let i = 0; i <= (4 - data.length); i++) {
+                        $(images[4-i]).attr("src", "")
+                    }
+                }
+
+                setTimeout(update, 1000);
+            });
 
         })();
     </script>
     <style>
-        #first_image, #second_image, #third_image, #fourth_image, #fifth_image {
-            width: calc(147.5555555555556);
-            /* height: 83px; */
-            margin-left: calc(37% - 100px);
+        #first_image, #second_image, #third_image, #fourth_image {
+            width: 147.5555555555556px;
+            margin-left: calc(37% - 147.5555555555556px);
             margin-top: -112px;
             border: 1px solid rgba(0,0,0,.125);
             border-radius: 0.25rem 0 0 0.25rem;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            
+        }
+        #first_image:hover, #second_image:hover, #third_image:hover, #fourth_image:hover {
+            cursor: pointer;
+            opacity: 0.7;
         }
         .card {
-            margin-left: calc(37% - 50px);
+            margin-left: calc(37%);
             width: 40%;
             border-radius: 0 0.25rem 0.25rem 0;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         }
         .activity {
-            margin-left: calc(37% - 100px);
+            margin-left: calc(37% - 147.5555555555556px);
             margin-top: 40px;
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+            /* Modal Content (image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            background-clip: unset;
+            border: 2px solid rgba(0,0,0,.2);
+        }
+
+            /* Caption of Modal Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation */
+        .modal-content, #caption {  
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {-webkit-transform:scale(0)} 
+            to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <h1 style="text-align: center; margin-top: 20px">Surveillance camera</h1>
+
+    <div id="modal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
     
-    <p class="activity">Latest activity</p>
+    <div id="container">
+        <p class="activity">Latest activity</p>
     <div class="card">
         <ul class="list-group list-group-flush">
           <li class="list-group-item" id="first"></li>
@@ -87,5 +190,29 @@
         </ul>
     </div>
     <img id="fourth_image" src="" alt="">
+    </div>
+    <script>
+        var modal = document.getElementById("modal")
+                
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var modalImg = document.getElementById("img01")
+        
+        console.log(images.length)
+        for(let i = 0; i < images.length; i++) {
+            document.getElementById(images[i].replace("#", "")).addEventListener("click", function() {
+                console.log("klick")
+                modal.style.display = "block";
+                modalImg.src = this.src;
+            })
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() { 
+            modal.style.display = "none";
+        }
+    </script>
 </body>
 </html>
