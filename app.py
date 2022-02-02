@@ -24,6 +24,7 @@ def get_images():
     for f in filenames:
         shutil.copy("detected_images/" + f, "static")
 
+    print(len(filenames))
     return jsonify(filenames)
 
 if __name__ == "__main__":
