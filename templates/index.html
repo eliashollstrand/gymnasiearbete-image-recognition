@@ -15,8 +15,8 @@
 
             $.get('/data', function(data) {
                 for(let i = 0; i < data.length; i++) {
-                    $(names[i]).html("<strong>Detected:</strong> " + data[i].split(' - ')[1].replace(".png", ""))
-                    $(dates[i]).html("<strong>Date:</strong> " + data[i].split(' - ')[0].replace(".", ":"))
+                    $(names[i]).html("<strong>Detected:</strong> " + data[data.length-1 - i].split(' - ')[1].replace(".png", ""))
+                    $(dates[i]).html("<strong>Date:</strong> " + data[data.length-1 - i].split(' - ')[0].replace(".", ":"))
                 }    
 
                 if(data.length < 4) {
@@ -30,7 +30,7 @@
             $.get('/get_images', function(data) {
 
                 for(let i = 0; i < data.length; i++) {
-                    $(images[i]).attr("src","static/" + data[i]);
+                    $(images[i]).attr("src","static/" + data[data.length-1 - i]);
                 }    
 
                 if(data.length < 4) {
@@ -46,8 +46,8 @@
     </script>
     <style>
         #first_image, #second_image, #third_image, #fourth_image {
-            width: 147.5555555555556px;
-            margin-left: calc(37% - 147.5555555555556px);
+            width: 83px;
+            margin-left: calc(34% - 83px);
             margin-top: -112px;
             border: 1px solid rgba(0,0,0,.125);
             border-radius: 0.25rem 0 0 0.25rem;
@@ -59,13 +59,13 @@
             opacity: 0.7;
         }
         .card {
-            margin-left: calc(37%);
+            margin-left: calc(34%);
             width: 40%;
             border-radius: 0 0.25rem 0.25rem 0;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         }
         .activity {
-            margin-left: calc(37% - 147.5555555555556px);
+            margin-left: calc(34% - 83px);
             margin-top: 40px;
         }
 
@@ -88,7 +88,7 @@
             margin: auto;
             display: block;
             width: 80%;
-            max-width: 700px;
+            max-width: 400px;
             background-clip: unset;
             border: 2px solid rgba(0,0,0,.2);
         }
