@@ -1,5 +1,5 @@
 # Gymnasiearbete 2021 - Övervakningskamera med image recognition
-##Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D
+## Skapare: Elias Hollstrand & Vincent Nildén, Åva Gymnasium, TE19D
 Gymnasiearbete om image recognition med en övervakningskamera konstruerad m.h.a. Raspberry Pi samt komponenter. 
 
 **Funktion:** Den konstuerade övervakningskameran detekterar rörelse och tar bild som sedan analyseras utifrån en Siamese neural network modell vars uppgift är att verifiera vare sig bilden innehåller ansiktet av en verifierad användare eller inte. Bilden skickas till en app som visar de senast detekterade bilderna samt vad som detekterats i dem. 
