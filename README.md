@@ -13,4 +13,6 @@
 
 **app.py** - Kör en Flask app på localhost som visar de senast detekterade bilderna samt vad som detekterats i dem. Strukturen på HTML-sidan är sådan som anges utav *index.html* i mappen *templates*. 
 
+**img_processing.py** - Croppar inputbild så att modellen enbart tillämpas på eventuella ansikten i den. 
+
 **preprocess.py & layers.py** - Nödvändiga funktioner
