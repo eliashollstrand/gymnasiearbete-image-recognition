@@ -1,9 +1,9 @@
 # Import standard dependencies
 import os
-import tensorflow as tf
 # Import tensorflow dependencies - Functional API
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Layer, Conv2D, Dense, MaxPooling2D, Input, Flatten
+from tensorflow.python.keras.models import Model
+from tensorflow.python.keras.layers import Layer, Conv2D, Dense, MaxPooling2D, Input, Flatten
+import tensorflow as tf
 
 # Setup paths
 POS_PATH = os.path.join('data', 'positive')
@@ -162,4 +162,4 @@ EPOCHS = 50
 train(train_data, EPOCHS)
 
 # Save weights
-siamese_model.save('siamesemodel.h5')
+siamese_model.save('models/siamesemodel_v4.h5')
